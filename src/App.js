@@ -17,20 +17,16 @@ class App extends React.Component {
   }
 
   handleLikes = (index) => {
-    // console.log(name);
     console.log("liked button clicked", index);
-    let likedBeerCopy = [];
+    let likedBeersCopy = [];
     let likedBeer = this.state.beers[index];
-    likedBeerCopy.splice(index, 1, likedBeer);
-    console.log("likedBeer", likedBeerCopy);
-    this.setState({
-      likedBeers: this.state.likedBeers.concat(likedBeer),
-    });
-    // this.setState({
-    //   likedBeers: this.state.likedBeers.concat(
-    //     this.state.beers.slice(index, index + 1)
-    //   ),
-    // });
+    likedBeersCopy.splice(index, 1, likedBeer);
+    console.log("likedBeer", likedBeersCopy);
+    if (!this.state.likedBeers.includes(likedBeer))
+      this.setState({
+        // likedBeers: [...this.state.likedBeers, likedBeer],
+        likedBeers: this.state.likedBeers.concat(likedBeersCopy),
+      });
   };
 
   isLiked = (index) => {
@@ -39,10 +35,8 @@ class App extends React.Component {
       let likedBeerCopy = this.state.likedBeers;
       let beerFilter = likedBeerCopy.find((el) => el === beerArray[index]);
       if (beerFilter) {
-        console.log("isLike is true");
         return true;
       } else {
-        console.log("isLiked is false");
         return false;
       }
     }, 50);
@@ -59,12 +53,12 @@ class App extends React.Component {
     axios.get("https://api.punkapi.com/v2/beers").then((res) => {
       const beers = res.data;
       this.setState({ beers });
-      // console.log(beers);
     });
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(index) {
     console.log("likedBeers", this.state.likedBeers);
+    console.log("beers", this.state.beers);
     // console.log("isHidden", this.state.isHidden);
   }
 
@@ -75,9 +69,10 @@ class App extends React.Component {
           <ol style={{ listStyle: "none" }}>
             {this.state.beers.map((beer, index) => {
               return (
-                <BeerCard2
+                <BeerCard
                   key={nanoid()}
                   index={index}
+                  id={beer.id}
                   name={beer.name}
                   image={beer.image_url}
                   tag={beer.tagline}
@@ -85,12 +80,14 @@ class App extends React.Component {
                   description={beer.description}
                   abv={beer.abv}
                   handleLikes={this.handleLikes}
-                  likedBeers={this.state.likedBeers}
                   isLiked={this.isLiked}
                   malts={beer.ingredients.malt[0].name}
                   hops={beer.ingredients.hops[0].name}
                   yeast={beer.ingredients.yeast}
-                  handleHidden={this.handleHidden}
+                  buttonText={this.state.buttonText}
+                  likedBeers={this.state.likedBeers}
+                  beers={this.state.beers}
+                  // handleHidden={this.handleHidden}
                   // isHidden={this.state.isHidden}
                 />
               );
