@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Button from "./Button";
+import InfoCard from "./InfoCard";
+import LikeButton from "./LikeButton";
 
 function BeerCard(props) {
   const [isHidden, setHidden] = useState(true);
@@ -13,11 +15,22 @@ function BeerCard(props) {
         <span>First brewed in: {props.brewed}</span>
       </h2>
       {props.tag}
-      <img
+      <InfoCard
+        beers={props.beers}
+        handleInfo={props.handleInfo}
+        beersInfo={props.beersInfo}
+        index={props.index}
+        name={props.name}
+        image={props.image}
+        malts={props.malts}
+        hops={props.hops}
+        yeast={props.yeast}
+      />
+      {/* <img
         style={{ height: "200px" }}
         src={props.image}
         alt={props.name}
-        onClick={() => (isHidden ? setHidden(false) : setHidden(true))}
+        // onClick={() => (isHidden ? setHidden(false) : setHidden(true))}
         // onClick={() => handleHidden()}
       ></img>
       {isHidden ? (
@@ -28,9 +41,10 @@ function BeerCard(props) {
           <p>Hops: {props.hops}</p>
           <p>Yeast: {props.yeast}</p>
         </div>
-      )}
+      )} works */}
       <article>{props.description}</article>
       ABV: {props.abv}
+      {/* <LikeButton /> works */}
       <Button
         index={props.index}
         id={props.id}

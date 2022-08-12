@@ -4,7 +4,7 @@ import "./App.css";
 
 import BeerCard from "./BeerCard";
 import { nanoid } from "nanoid";
-import BeerCard2 from "./BeerCard2";
+// import BeerCard2 from "./BeerCard2";
 
 class App extends React.Component {
   constructor() {
@@ -13,8 +13,22 @@ class App extends React.Component {
     this.state = {
       beers: [],
       likedBeers: [],
+      beersInfo: [],
     };
   }
+
+  handleInfo = (index) => {
+    console.log("info clicked at index: ", index);
+    let beersInfoCopy = [];
+    let beerInfo = this.state.beers[index];
+    console.log("beerInfo", beerInfo);
+    beersInfoCopy.splice(index, 1, beerInfo);
+    console.log("beersInfoCopy", beersInfoCopy);
+    if (!this.state.beersInfo.includes(beerInfo))
+      this.setState({
+        beersInfo: [...this.state.beersInfo, beerInfo],
+      });
+  };
 
   handleLikes = (index) => {
     console.log("liked button clicked", index);
@@ -43,13 +57,6 @@ class App extends React.Component {
     }, 50);
   };
 
-  // handleHidden = () => {
-  //   let status = this.state.isHidden ? false : true;
-  //   this.setState({
-  //     isHidden: status,
-  //   });
-  // };
-
   componentDidMount() {
     axios.get("https://api.punkapi.com/v2/beers").then((res) => {
       const beers = res.data;
@@ -58,9 +65,9 @@ class App extends React.Component {
   }
 
   componentDidUpdate(index) {
-    console.log("likedBeers", this.state.likedBeers);
     console.log("beers", this.state.beers);
-    // console.log("isHidden", this.state.isHidden);
+    console.log("likedBeers", this.state.likedBeers);
+    console.log("beersInfo", this.state.beersInfo);
   }
 
   render() {
@@ -73,7 +80,6 @@ class App extends React.Component {
                 <BeerCard
                   key={nanoid()}
                   index={index}
-                  id={beer.id}
                   name={beer.name}
                   image={beer.image_url}
                   tag={beer.tagline}
@@ -85,11 +91,10 @@ class App extends React.Component {
                   malts={beer.ingredients.malt[0].name}
                   hops={beer.ingredients.hops[0].name}
                   yeast={beer.ingredients.yeast}
-                  buttonText={this.state.buttonText}
                   likedBeers={this.state.likedBeers}
                   beers={this.state.beers}
-                  // handleHidden={this.handleHidden}
-                  // isHidden={this.state.isHidden}
+                  handleInfo={this.handleInfo}
+                  beersInfo={this.state.beersInfo}
                 />
               );
             })}
