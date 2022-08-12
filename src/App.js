@@ -29,6 +29,7 @@ class App extends React.Component {
       });
   };
 
+  // do i even need this function, seems to work without it on the button component //
   isLiked = (index) => {
     setTimeout(() => {
       let beerArray = this.state.beers;
