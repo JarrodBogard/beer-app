@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import Button from "./Button";
 import InfoCard from "./InfoCard";
 import LikeButton from "./LikeButton";
+import HideLikeButtons from "./HideLikeButtons";
 
 function BeerCard(props) {
-  const [isHidden, setHidden] = useState(true);
-  // const [isLiked, setLiked] = useState(false);
-
   return (
     <li>
       <h2>
@@ -26,25 +24,9 @@ function BeerCard(props) {
         hops={props.hops}
         yeast={props.yeast}
       />
-      {/* <img
-        style={{ height: "200px" }}
-        src={props.image}
-        alt={props.name}
-        // onClick={() => (isHidden ? setHidden(false) : setHidden(true))}
-        // onClick={() => handleHidden()}
-      ></img>
-      {isHidden ? (
-        <div></div>
-      ) : (
-        <div>
-          <p>Malts: {props.malts}</p>
-          <p>Hops: {props.hops}</p>
-          <p>Yeast: {props.yeast}</p>
-        </div>
-      )} works */}
       <article>{props.description}</article>
       ABV: {props.abv}
-      {/* <LikeButton /> works */}
+      {/* <LikeButton /> */}
       <Button
         index={props.index}
         id={props.id}
@@ -53,6 +35,13 @@ function BeerCard(props) {
         likedBeers={props.likedBeers}
         beers={props.beers}
       />
+      {/* <HideLikeButtons
+        image={props.image}
+        name={props.name}
+        malts={props.malts}
+        hops={props.hops}
+        yeast={props.yeast}
+      /> */}
     </li>
   );
 }

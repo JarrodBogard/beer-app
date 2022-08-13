@@ -3,8 +3,9 @@ import axios from "axios";
 import "./App.css";
 
 import BeerCard from "./BeerCard";
-import { nanoid } from "nanoid";
 // import BeerCard2 from "./BeerCard2";
+
+import { nanoid } from "nanoid";
 
 class App extends React.Component {
   constructor() {
@@ -24,10 +25,19 @@ class App extends React.Component {
     console.log("beerInfo", beerInfo);
     beersInfoCopy.splice(index, 1, beerInfo);
     console.log("beersInfoCopy", beersInfoCopy);
-    if (!this.state.beersInfo.includes(beerInfo))
+    if (!this.state.beersInfo.includes(beerInfo)) {
       this.setState({
         beersInfo: [...this.state.beersInfo, beerInfo],
       });
+    } else {
+      let filteredBeerInfo = this.state.beersInfo.filter(
+        (beer) => beer !== beerInfo
+      );
+      this.setState({
+        beersInfo: [...filteredBeerInfo], // doesn't need spread operator
+        // beersInfo: [...this.state.beersInfo.splice(index,1)]
+      });
+    }
   };
 
   handleLikes = (index) => {
@@ -36,11 +46,19 @@ class App extends React.Component {
     let likedBeer = this.state.beers[index];
     likedBeersCopy.splice(index, 1, likedBeer);
     console.log("likedBeer", likedBeersCopy);
-    if (!this.state.likedBeers.includes(likedBeer))
+    if (!this.state.likedBeers.includes(likedBeer)) {
       this.setState({
-        // likedBeers: [...this.state.likedBeers, likedBeer],
-        likedBeers: this.state.likedBeers.concat(likedBeersCopy),
+        // likedBeers: [...this.state.likedBeers, likedBeer], // alternate with spread operator
+        likedBeers: this.state.likedBeers.concat(likedBeersCopy), // can use single element or array copy
       });
+    } else {
+      let filteredLikedBeers = this.state.likedBeers.filter(
+        (beer) => beer !== likedBeer
+      );
+      this.setState({
+        likedBeers: filteredLikedBeers,
+      });
+    }
   };
 
   // do i even need this function, seems to work without it on the button component //

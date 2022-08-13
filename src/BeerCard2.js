@@ -54,13 +54,19 @@ class BeerCard2 extends React.Component {
             </div>
           )}
         </div>
-        <div onClick={() => this.handleClick()}>
+        <button
+          className={this.state.isLiked ? "liked" : "unliked"}
+          onClick={() => this.handleClick()}
+        >
+          Like
+        </button>
+        {/* <div onClick={() => this.handleClick()}>
           {this.state.isLiked ? (
             <button className="liked">Like</button>
           ) : (
             <button className="unliked">Like</button>
           )}
-        </div>
+        </div> */}
       </div>
     );
   }
